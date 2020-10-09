@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "Matrix.hpp"
 #include <iostream>
 
 typedef unsigned int ui;
@@ -52,6 +52,46 @@ Matrix::Matrix(const Matrix &matrix)
     }
 }
 
+Matrix::Matrix(Matrix &&m)
+    :matrix(m.matrix)
+     ,rows(m.rows)
+     ,cols(m.cols)
+{
+        std::cout << "called move c-r\n";
+        m.matrix = nullptr;
+        m.rows = 0;
+        m.cols = 0;
+}
+
+std::ostream& operator<<(std::ostream& out, const Matrix  &m) {
+    for(ui i = 0; i < m.rows; ++i) {
+        for(ui j = 0; j < m.cols; ++j) {
+            out << m.matrix[i][j] << "   ";
+        }
+        out << std::endl;
+    }
+    return out;
+}
+
+
+Matrix Matrix::operator*(const Matrix &m) {
+    if(cols != m.rows) {
+        std::cout << "This Matrixes can't be multiplied\n";
+        Matrix res;
+        res.matrix = nullptr;
+        return res;
+    }
+    Matrix res(rows, m.cols);
+    for(ui i = 0; i < rows; ++i) {
+        for(ui j = 0; j < m.cols; ++j) {
+            for(ui k = 0; k < cols; ++k) {
+                res.matrix[i][j] += matrix[i][k] * m.matrix[k][j];
+            }
+        }
+    }
+    return res;
+}
+
 Matrix::~Matrix() {
     std::cout << "destr-r is called\n";
     for(ui i = 0; i < rows; ++i) {
@@ -77,23 +117,4 @@ void Matrix::swapCols(ui first, ui second) {
         std::swap(matrix[i][first], matrix[i][second]);
     }
 }
-
-void Matrix::print() {
-    for(ui i = 0; i < rows; ++i) {
-        for(ui j = 0; j < cols; ++j) {
-            std::cout << matrix[i][j] << "   ";
-        }
-        std::cout << std::endl;
-    }
-}
-
-
-
-
-
-
-
-
-
-
 
