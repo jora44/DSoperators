@@ -26,9 +26,11 @@ int main() {
     rows = 3;
     cols = 5;
     Matrix y = Matrix(makeMatrix(rows, cols), rows, cols);
-    std::cout << "x is:\n\n" << x << "y is:\n\n" << y;
+    std::cout << "\nx is:\n\n" << x << "\ny is:\n\n" << y;
     Matrix z = x * y;
-    std::cout << "x * y is:\n\n" << z;
+    std::cout << "\nx * y is:\n\n" << z;
+    x *= y;
+    std::cout << "\nafter \"x *= y\", x is: \n\n" << x;
    /*
    Matrix matrix = Matrix(array, rows, cols);
    f(Matrix(makeMatrix(rows, cols), rows, cols));

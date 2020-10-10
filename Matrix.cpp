@@ -42,7 +42,7 @@ Matrix::Matrix(const Matrix &matrix)
     :rows(matrix.rows)
     ,cols(matrix.cols)
 {
-    std::cout << "Copy constructor is called\n";
+    //std::cout << "Copy constructor is called\n";
     this->matrix = new double*[rows];
     for(ui i = 0; i < rows; ++i) {
         this->matrix[i] = new double[cols];
@@ -57,7 +57,7 @@ Matrix::Matrix(Matrix &&m)
      ,rows(m.rows)
      ,cols(m.cols)
 {
-        std::cout << "called move c-r\n";
+        //std::cout << "called move c-r\n";
         m.matrix = nullptr;
         m.rows = 0;
         m.cols = 0;
@@ -92,8 +92,31 @@ Matrix Matrix::operator*(const Matrix &m) {
     return res;
 }
 
+void Matrix::operator *= (const Matrix &m) {
+    if(cols != m.rows) {
+        std::cout << "This Matrixes can't be multiplied\n";
+        return;
+    }
+    double** res = new double* [rows];
+    for(ui i = 0; i < rows; ++i) {
+        res[i] = new double [m.cols];
+        for(ui j = 0; j < m.cols; ++j) {
+            for(ui k = 0; k < cols; ++k) {
+                res[i][j] += matrix[i][k] * m.matrix[k][j];
+            }
+        }
+    }
+    for(ui i = 0; i < rows; ++i) {
+        delete[] matrix[i];
+    }
+    matrix = res;
+    cols = m.cols;
+    return;
+}
+
+    
 Matrix::~Matrix() {
-    std::cout << "destr-r is called\n";
+   // std::cout << "destr-r is called\n";
     for(ui i = 0; i < rows; ++i) {
         delete[] matrix[i];
     }
