@@ -92,15 +92,16 @@ Matrix Matrix::operator*(const Matrix &m) {
     return res;
 }
 
-void Matrix::operator *= (const Matrix &m) {
+Matrix& Matrix::operator *= (const Matrix &m) {
     if(cols != m.rows) {
         std::cout << "This Matrixes can't be multiplied\n";
-        return;
+        return *this;
     }
     double** res = new double* [rows];
     for(ui i = 0; i < rows; ++i) {
         res[i] = new double [m.cols];
         for(ui j = 0; j < m.cols; ++j) {
+            res[i][j] = 0;
             for(ui k = 0; k < cols; ++k) {
                 res[i][j] += matrix[i][k] * m.matrix[k][j];
             }
@@ -109,11 +110,15 @@ void Matrix::operator *= (const Matrix &m) {
     for(ui i = 0; i < rows; ++i) {
         delete[] matrix[i];
     }
+    delete[] matrix;
     matrix = res;
     cols = m.cols;
-    return;
+    return *this;
 }
 
+double* Matrix::operator [] (int index) const {
+    return matrix[index];
+}
     
 Matrix::~Matrix() {
    // std::cout << "destr-r is called\n";

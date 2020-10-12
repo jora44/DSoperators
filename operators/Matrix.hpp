@@ -14,7 +14,9 @@ struct Matrix {
     void swapCols(unsigned, unsigned);
     friend std::ostream& operator<<(std::ostream&, const Matrix &);
     Matrix operator*(const Matrix &);
-    void operator*=(const Matrix &);
+    Matrix& operator*=(const Matrix &);
+    double* operator [] (int) const;
+
  
   private:
       double** matrix;
