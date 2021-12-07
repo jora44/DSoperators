@@ -18,9 +18,9 @@ Matrix::Matrix(ui rows, ui cols)
     ,cols(cols)
 {
     matrix = new double*[rows];
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         matrix[i] = new double[cols];
-        for(ui j = 0; j < cols; ++j) {
+        for (ui j = 0; j < cols; ++j) {
             if (i >= rows || j >= cols)
             {
                 std::cerr << "index out of range" << std::endl;
@@ -35,9 +35,9 @@ Matrix::Matrix(double** matrix, ui rows, ui cols)
     ,cols(cols)
 {
     this->matrix = new double*[rows];
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         this->matrix[i] = new double[cols];
-        for(ui j = 0; j < cols; ++j) {
+        for (ui j = 0; j < cols; ++j) {
             this->matrix[i][j] = matrix[i][j];
         }
     }
@@ -49,9 +49,9 @@ Matrix::Matrix(const Matrix &matrix)
 {
     //std::cout << "Copy constructor is called\n";
     this->matrix = new double*[rows];
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         this->matrix[i] = new double[cols];
-        for(ui j = 0; j < cols; ++j) {
+        for (ui j = 0; j < cols; ++j) {
             this->matrix[i][j] = matrix.matrix[i][j];
         }
     }
@@ -69,8 +69,8 @@ Matrix::Matrix(Matrix &&m)
 }
 
 std::ostream& operator<<(std::ostream& out, const Matrix  &m) {
-    for(ui i = 0; i < m.rows; ++i) {
-        for(ui j = 0; j < m.cols; ++j) {
+    for (ui i = 0; i < m.rows; ++i) {
+        for (ui j = 0; j < m.cols; ++j) {
             out << m.matrix[i][j] << "   ";
         }
         out << std::endl;
@@ -87,9 +87,9 @@ Matrix Matrix::operator*(const Matrix &m) {
         return res;
     }
     Matrix res(rows, m.cols);
-    for(ui i = 0; i < rows; ++i) {
-        for(ui j = 0; j < m.cols; ++j) {
-            for(ui k = 0; k < cols; ++k) {
+    for (ui i = 0; i < rows; ++i) {
+        for (ui j = 0; j < m.cols; ++j) {
+            for (ui k = 0; k < cols; ++k) {
                 res.matrix[i][j] += matrix[i][k] * m.matrix[k][j];
             }
         }
@@ -103,11 +103,11 @@ Matrix& Matrix::operator *= (const Matrix &m) {
         return *this;
     }
     double** res = new double* [rows];
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         res[i] = new double [m.cols];
-        for(ui j = 0; j < m.cols; ++j) {
+        for (ui j = 0; j < m.cols; ++j) {
             res[i][j] = 0;
-            for(ui k = 0; k < cols; ++k) {
+            for (ui k = 0; k < cols; ++k) {
                 res[i][j] += matrix[i][k] * m.matrix[k][j];
             }
         }
