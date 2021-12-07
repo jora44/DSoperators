@@ -1,4 +1,5 @@
 #include "Matrix.hpp"
+
 #include <iostream>
 
 typedef unsigned int ui;
@@ -20,6 +21,10 @@ Matrix::Matrix(ui rows, ui cols)
     for(ui i = 0; i < rows; ++i) {
         matrix[i] = new double[cols];
         for(ui j = 0; j < cols; ++j) {
+            if (i >= rows || j >= cols)
+            {
+                std::cerr << "index out of range" << std::endl;
+            }
             matrix[i][j] = 0;
         }
     }
@@ -107,7 +112,7 @@ Matrix& Matrix::operator *= (const Matrix &m) {
             }
         }
     }
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         delete[] matrix[i];
     }
     delete[] matrix;
@@ -121,8 +126,7 @@ double* Matrix::operator [] (int index) const {
 }
     
 Matrix::~Matrix() {
-   // std::cout << "destr-r is called\n";
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         delete[] matrix[i];
     }
     delete[] matrix;
@@ -141,7 +145,7 @@ void Matrix::swapRows(ui i, ui j) {
 }
 
 void Matrix::swapCols(ui first, ui second) {
-    for(ui i = 0; i < rows; ++i) {
+    for (ui i = 0; i < rows; ++i) {
         std::swap(matrix[i][first], matrix[i][second]);
     }
 }
