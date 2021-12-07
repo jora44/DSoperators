@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MATRIX_HPP_
+#define MATRIX_HPP_
+
 #include <iostream>
 
 struct Matrix {
@@ -23,3 +25,6 @@ struct Matrix {
       unsigned rows;
       unsigned cols;
 };
+
+#endif // MATRIX_HPP_
+
